@@ -1,0 +1,41 @@
+<% include partials/header.ejs %>
+
+<div class="container" >
+    <header class="jumbotron">
+        <div>
+            <h1>English Q&A</h1>
+            <p>Ask your peers, professors and alumni questions</p>
+            <p>
+                <a class="btn btn-info" href="/q&a/new"> Ask a New Question </a> 
+            </p>
+        </div>
+    </header>
+
+    <div class="container d-flex justify-content-center" >
+        <div class="row text-center" id="proper-width" >
+            <% allQuestions.forEach(function(question){ %>
+                <div class="col-md-10 col-sm-10 m-3" id="proper-width" >  
+                    <div class="img-thumbnail" style="width: 650px;">
+                        
+                        <div class="#">
+                            <img class="img-fluid max-width: 100% height: auto" src="<%= question.image%>"> 
+                        </div>            
+                        <div class="card-body">
+                            <div class="caption card-title" >
+                                <h4> <%=question.question%> </h4>
+                            </div>
+                            <div>
+                                <p>
+                                    <a href="/q&a/<%= question._id %>" class="btn btn-outline-info float-right stretched-link"> View </a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            <%})%>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer.ejs %>

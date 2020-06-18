@@ -1,0 +1,11 @@
+.formWidth{
+    width: 60%;
+    margin: 40px auto;
+}
+
+.proper-width {
+    width: 100%;
+    background-color: red;
+    display: block;
+}
+

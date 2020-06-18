@@ -1,0 +1,41 @@
+<% include partials/header.ejs %>
+
+<main>
+    <section class="jumbotron text-center" style="background-color: white;" >
+        <div class="container">
+            <h1 class="jumbotron-heading"> Alumni Connection</h1>
+            <hr class="my-4">
+            <p class="lead text-muted">Welcome to the place where you can meet, ask questions, and interact with USU English alumni, professors, current students, and more</p>
+        </div>
+        <p>
+            <a href="/alumni/new" class="btn btn-info my-2 btn-lg"> Join the Group</a>
+        </p>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row" style= "display: flex; flex-wrap: wrap">
+                <% alumns.forEach(function(alumn){ %>
+                    <div class="col-lg-4 col-md-4 col-sm-10">
+                        <div class="card mb-2 box-shadow">
+                            <img class="card-img-top img-fluid max-width: 40% height: auto"  src="<%= alumn.alumniImage %>" data-holder-rendered="true">
+                            <div class="card-body">
+                                <p><strong> <%= alumn.alumniName %> </strong></p>
+                                <p class="card-text"> <%= alumn.alumniDescription %> </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="/alumni/<%=alumn._id%>" class="btn btn-sm btn-outline-secondary"> View </a>
+                                    </div>
+                                    <small class="text-muted"> Date</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<% include partials/footer.ejs %>

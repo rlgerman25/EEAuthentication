@@ -1,0 +1,36 @@
+<% include partials/header.ejs %>
+
+<!-- p-3 p-md-5 text-white rounded bg-dark-->
+
+<div class="container p-3 p-md-5 text-white rounded bg-dark" style="margin-bottom: 8rem;" >
+    <div class="jumbotron bg-dark">
+        <div class="col-md-6 px-4">
+            <h1 class="display-4 font-italic"> Book Selling/Exchanging </h1>
+            <p class="lead my-3"> Fuera lo viejo, venga lo nuevo </p>
+            <a href="/books/new"> <button type="button" class="btn btn-outline-info"> Sell/Exchange a book </button></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row" >
+    <% bookList.forEach(function(newlyCreatedBook){ %>     
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card" style="width: 360px; display: flex; flex-wrap: wrap; margin-bottom: 30px;">
+                <div>
+                    <img class="card-img-top img-fluid max-width: 80% height: auto" src=" <%=newlyCreatedBook.bookImage%> ">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"><i><%= newlyCreatedBook.bookAuthor%> </i> </h5>
+                    <h4><%= newlyCreatedBook.bookName %> </h4>
+                    <p class="card-text"> <%= newlyCreatedBook.bookFavoritePart %> </p>
+                    <a href="/books/<%=newlyCreatedBook._id%>" class="btn btn-sm btn-info"> View </a>
+                </div>
+            </div>
+        </div>
+    <% });  %> 
+    </div>
+</div>
+      
+<% include partials/footer.ejs %>
