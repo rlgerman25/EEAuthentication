@@ -2,8 +2,8 @@
 const	bodyParser 	= require("body-parser"),
 		express 	= require("express"),
 		mongoose 	= require("mongoose"),
-		passport	= require("passport"),
-		LocalStrategy = require("passport-local"),
+		passport = require("passport"),
+    	LocalStrategy = require("passport-local"),
 		path 		= require("path"),
 		ejs 		= require("ejs"),
 		QA			= require("./models/qaSchema.js"), 
@@ -21,16 +21,35 @@ seedDB()
 const app = express();
 const port = 3000;
 
-mongoose.connect("mongodb://localhost/english_experience_v3", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/authDB", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+
+//PASSPORT CONFIGURATION
+app.use(require("express-session")({
+	secret: "I am the master of my faith, I am the captain of my soul",
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//PASSING NAVBAR LOGIN MIDDLEWARE GLOBALLY
+app.use(function(req, res, next){
+	res.locals.currentUser = req.user;
+	next();
+});
+
+// End of passport logic
 
 //Set a folder for styles and js extensions
 app.use('/public', express.static('public'));
 
 //EJS EXTENSIONS
 app.set("view engine", "ejs");
-
 
 // "/" => LANDING PAGE
 app.get("/", function(req, res){
@@ -171,6 +190,33 @@ app.get("/books/:id", function(req, res){
 app.get("/resources", function(req, res){
 	res.render("resources");
 });
+
+// ===========
+// Auth Routes
+// ===========
+
+app.get("/register", function(req, res) {
+	res.render("register")
+})
+
+app.post("/register", function(req, res) {
+	// The logic here comes from passport in user.js
+	const newUser = new User({username: req.body.username});
+	User.register(newUser, req.body.password, function(err, user) {
+		if(err) {
+			console.log(err);
+			return res.render("register");
+		}
+		passport.authenticate("local")(req, res, function() {
+			res.redirect("/q&a")
+		})
+
+	})
+	User.register()
+})
+// ==================
+// End of Auth Routes
+// ==================
 
 //CATCH ALL ROUTE
 app.get("*", function(req, res){
