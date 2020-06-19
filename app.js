@@ -222,7 +222,9 @@ app.get("/login", function(req, res) {
 // handling login process - uses passport as middleware 
 app.post("/login", passport.authenticate("local", 
 	{
+		// Success - Redirect here
 		successRedirect: "/q&a",
+		// Unsuccessful - Redirect there
 		failureRedirect: "/login"
 	}), function(req, res) {
 })
