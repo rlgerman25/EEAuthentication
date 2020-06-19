@@ -2,6 +2,8 @@
 const	bodyParser 	= require("body-parser"),
 		express 	= require("express"),
 		mongoose 	= require("mongoose"),
+		passport	= require("passport"),
+		LocalStrategy = require("passport-local"),
 		path 		= require("path"),
 		ejs 		= require("ejs"),
 		QA			= require("./models/qaSchema.js"), 
@@ -9,6 +11,7 @@ const	bodyParser 	= require("body-parser"),
 		NewBook		= require("./models/newBook.js"),
 		QAseedDB	= require("./seedsQA"),
 		seedAlumn	= require("./seedAlumn"),
+		User 		= require("./models/user.js"), 
 		seedDB		= require("./seeds");
 
 
