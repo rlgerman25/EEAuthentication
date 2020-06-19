@@ -33,6 +33,7 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+ // This next line authenticates the user at login
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -214,6 +215,18 @@ app.post("/register", function(req, res) {
 	})
 	User.register()
 })
+// Render login page
+app.get("/login", function(req, res) {
+	res.render("login");
+})
+// handling login process - uses passport as middleware 
+app.post("/login", passport.authenticate("local", 
+	{
+		successRedirect: "/q&a",
+		failureRedirect: "/login"
+	}), function(req, res) {
+})
+
 // ==================
 // End of Auth Routes
 // ==================
