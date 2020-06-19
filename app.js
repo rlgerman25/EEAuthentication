@@ -84,7 +84,7 @@ app.post("/q&a", function(req, res){
 	});	
 });
 
-app.get("/q&a/new", function(req, res){
+app.get("/q&a/new", isLoggedIn, function(req, res){
 	res.render("qanew");
 });
 
@@ -235,6 +235,17 @@ app.get("/logout", function(req, res) {
 // ==================
 // End of Auth Routes
 // ==================
+
+// ==================
+// Authentication middleware
+// ==================
+function isLoggedIn(req, res, next) {
+	if(req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/login')
+}
+
 
 //CATCH ALL ROUTE
 app.get("*", function(req, res){
